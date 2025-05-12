@@ -6,3 +6,17 @@
 *.log
 .DS_Store
 
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.vite/
+
+/frontend/.env.local
+/frontend/.env.*
+!.env.example
+
+/wasm/pkg/
+
+.DS_Store
+
+.vscode/
+.idea/
