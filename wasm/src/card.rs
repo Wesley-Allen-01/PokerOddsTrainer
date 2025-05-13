@@ -70,6 +70,7 @@ fn suit_to_bit(s: char) -> Option<u32> {
     }
 }
 
+
 #[wasm_bindgen]
 pub fn new_card(card_str: &str) -> Option<Card> {
     if card_str.len() != 2 {

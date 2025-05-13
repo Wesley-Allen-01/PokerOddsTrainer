@@ -2,9 +2,10 @@ use wasm_bindgen::prelude::*;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
 pub mod card;
+pub mod evaluate;
 
 #[wasm_bindgen]
-pub fn draw_random_hand() -> Vec<String> {
+pub fn draw(n: usize) -> Vec<String> {
     let suits = ["s", "c", "h", "d"];
     let ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
 
@@ -18,6 +19,20 @@ pub fn draw_random_hand() -> Vec<String> {
 
     deck.shuffle(&mut thread_rng());
 
-    vec![deck[0].clone(), deck[1].clone()]
+    deck.into_iter().take(n).collect()
 }
 
+#[wasm_bindgen]
+pub fn draw_starting_hand() -> Vec<String> {
+    draw(2)
+} 
+
+#[wasm_bindgen]
+pub fn draw_flop() -> Vec<String> {
+    draw(3)
+}
+
+#[wasm_bindgen] 
+pub fn draw_card() -> Vec<String> {
+    draw(1)
+}
