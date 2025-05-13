@@ -1,6 +1,7 @@
 use wasm_bindgen::prelude::*;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
+pub mod card;
 
 #[wasm_bindgen]
 pub fn draw_random_hand() -> Vec<String> {
