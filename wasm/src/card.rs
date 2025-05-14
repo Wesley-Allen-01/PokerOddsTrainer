@@ -82,6 +82,10 @@ pub fn prime_prod_from_rank(cards: u32) -> u32 {
     prod
 }
 
+pub fn prime_prod_from_pbits(cards: Vec<Card>) -> u32 {
+    cards.iter().fold(1, |acc, &x| acc * (x & 0x3F))
+}
+
 #[wasm_bindgen]
 pub fn new_card(card_str: &str) -> Option<Card> {
     if card_str.len() != 2 {
