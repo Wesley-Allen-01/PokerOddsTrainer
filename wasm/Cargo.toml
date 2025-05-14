@@ -10,3 +10,4 @@ crate-type = ["cdylib"]
 wasm-bindgen = "0.2"
 rand = "0.8"
 getrandom = { version = "0.2", features = ["js"] }
+once_cell = "1"

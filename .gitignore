@@ -17,6 +17,6 @@
 /wasm/pkg/
 
 .DS_Store
-
+playground.ipynb
 .vscode/
 .idea/

@@ -70,6 +70,17 @@ fn suit_to_bit(s: char) -> Option<u32> {
     }
 }
 
+pub fn prime_prod_from_rank(cards: u32) -> u32 {
+    let primes: [u32; 13] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41];
+    let mut prod: u32 = 1;
+
+    for i in 0..13 {
+        if cards & (1 << i) != 0 {
+            prod *= primes[i];
+        }
+    }
+    prod
+}
 
 #[wasm_bindgen]
 pub fn new_card(card_str: &str) -> Option<Card> {
@@ -111,6 +122,27 @@ mod tests {
         let card: u32 = new_card("5s").unwrap();
 
         assert_eq!(card, 529159)
+    }
+
+    #[test]
+    fn test_prime_from_rank_bits() {
+        let a = new_card("As").unwrap();
+        let b = new_card("Ks").unwrap();
+        let c = new_card("Qs").unwrap();
+        let d = new_card("Js").unwrap();
+        let e = new_card("Ts").unwrap();
+
+        let cards = &[a, b, c, d, e];
+
+        let combined_cards = cards.iter().copied().fold(0b0, |acc, x| acc | x);
+        
+        let clean_cards = combined_cards >> 16;
+
+        let predicted = prime_prod_from_rank(clean_cards);
+
+        let expected = 41 * 37 * 31 * 29 * 23;
+
+        assert_eq!(predicted, expected)
     }
 }
 

@@ -3,6 +3,7 @@ use rand::seq::SliceRandom;
 use rand::thread_rng;
 pub mod card;
 pub mod evaluate;
+pub mod lookup;
 
 #[wasm_bindgen]
 pub fn draw(n: usize) -> Vec<String> {

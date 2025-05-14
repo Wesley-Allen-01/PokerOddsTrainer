@@ -54,6 +54,7 @@ name = "odds_engine"
 version = "0.1.0"
 dependencies = [
  "getrandom",
+ "once_cell",
  "rand",
  "wasm-bindgen",
 ]
