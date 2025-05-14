@@ -47,11 +47,11 @@ impl Iterator for BitSubset {
     }
 }
 
-fn build_flush_table() -> HashMap<u32, u16> {
+fn build_flush_table() -> HashMap<u32, u32> {
 
     // 1287 = binom(13, 5)
     // Equates to the total number of distinct flushes disregarding suit
-    let mut map: HashMap<u32, u16> = HashMap::with_capacity(1287);
+    let mut map: HashMap<u32, u32> = HashMap::with_capacity(1287);
 
     const STRAIGHT_FLUSHES: [u32; 10] = [
         0b1_1111_0000_0000, // A-K-Q-J-T
@@ -95,10 +95,10 @@ fn build_flush_table() -> HashMap<u32, u16> {
     return map;
 }
 
-pub static FLUSH_LOOKUP: Lazy<HashMap<u32, u16>> = Lazy::new(build_flush_table);
+pub static FLUSH_LOOKUP: Lazy<HashMap<u32, u32>> = Lazy::new(build_flush_table);
 
-fn build_unsuited_table() -> HashMap<u32, u16> {
-    let mut map: HashMap<u32, u16> = HashMap::with_capacity(6175);
+fn build_unsuited_table() -> HashMap<u32, u32> {
+    let mut map: HashMap<u32, u32> = HashMap::with_capacity(6175);
 
     const PRIMES: [u32; 13] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41];
 
@@ -205,7 +205,7 @@ fn build_unsuited_table() -> HashMap<u32, u16> {
     return map;
 }
 
-pub static UNSUITED_LOOKUP: Lazy<HashMap<u32, u16>> = Lazy::new(build_unsuited_table);
+pub static UNSUITED_LOOKUP: Lazy<HashMap<u32, u32>> = Lazy::new(build_unsuited_table);
 
 #[cfg(test)]
 mod tests {
@@ -217,7 +217,7 @@ mod tests {
         let ryl_flush = 0b1_1111_0000_0000;
         let prime_val = prime_prod_from_rank(ryl_flush);
         let val = FLUSH_LOOKUP.get(&prime_val).copied().expect("Royal flush missing");
-        let expected: u16 = 1;
+        let expected: u32 = 1;
         assert_eq!(val, expected);
     }
     #[test]
