@@ -106,7 +106,24 @@ pub fn new_card(card_str: &str) -> Option<Card> {
     let new_card: Card = rank_b | suit | rank_n | rank_p;
 
     Some(new_card)
+}
 
+#[wasm_bindgen]
+pub fn card_to_str(card: Card) -> String {
+    let rank = card & 0x3F;
+    let suit = (card >> 12) & 0xF;
+
+    let rank_str = match rank {
+        2 => '2', 3 => '3', 5 => '4', 7 => '5',
+        11 => '6', 13 => '7', 17 => '8', 19 => '9', 
+        23 => 'T', 29 => 'J', 31 => 'Q', 37 => 'K', 41 => 'A',
+        _ => '?'
+    };
+    let suit_str = match suit {
+        1 => 's', 2 => 'h', 4 => 'd', 8 => 'c', _ => '?'
+    };
+
+    format!("{}{}", rank_str, suit_str)
 }
 
 

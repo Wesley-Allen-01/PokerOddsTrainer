@@ -1,8 +1,9 @@
-// use wasm_bindgen::prelude::*;
+use itertools::Itertools;
+use wasm_bindgen::prelude::*;
 use crate::card::{prime_prod_from_pbits, prime_prod_from_rank, Card};
 use crate::lookup::{FLUSH_LOOKUP, UNSUITED_LOOKUP};
 
-// #[wasm_bindgen]
+#[wasm_bindgen]
 pub fn evaluate_hand(cards: Vec<u32>) -> u32 {
     if check_flush(&cards) {
         let hand = cards.iter().fold(0u32, |acc, &x| acc | x) >> 16;
@@ -24,6 +25,16 @@ pub fn check_flush(cards: &[Card]) -> bool {
         return false
     }
 }
+
+pub fn evaluate_board(cards: Vec<u32>) -> u32 {
+    cards.iter()
+        .copied()
+        .combinations(5)
+        .map(|combo| evaluate_hand(combo))
+        .min()
+        .unwrap()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
